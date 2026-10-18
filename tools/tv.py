@@ -51,16 +51,19 @@ def connect(timeout=120):
 
 
 def unreachable_hint(err):
-    """Tells a sleeping TV apart from macOS blocking this terminal's access to the local network."""
+    """Explains a failed connection. From a terminal, macOS blocks all its child processes alike, so a
+    blocked terminal and a sleeping TV look the same; only a working `nc` proves it's this Python."""
     nc_ok = subprocess.run(["nc", "-z", "-G", "3", HOST, str(PORT)],
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
     if nc_ok:
-        return (f"Can't connect to the TV at {HOST}:{PORT} ({err}), but the TV is reachable.\n"
-                "macOS Local Network privacy is blocking this terminal app. Allow it in System Settings >\n"
-                "Privacy & Security > Local Network (turn on your terminal app), then run this again.")
-    return (f"The TV at {HOST}:{PORT} isn't reachable ({err}).\n"
-            "Is it on? In standby this TV drops off Wi-Fi: turn it on with the remote and try again.\n"
-            "If it's on, check Settings > Developer options > USB debugging and its IP address.")
+        return (f"Can't connect to the TV at {HOST}:{PORT} ({err}), although it is reachable.\n"
+                "macOS Local Network privacy is blocking this Python. Allow your terminal app in System Settings >\n"
+                "Privacy & Security > Local Network, then run this again.")
+    return (f"The TV at {HOST}:{PORT} isn't reachable ({err}). Either:\n"
+            "  - macOS Local Network privacy blocks this terminal app (if the TV is on, it's this): System Settings >\n"
+            "    Privacy & Security > Local Network > turn on your terminal app (Terminal, iTerm, Ghostty, ...),\n"
+            "    then quit and reopen the terminal and run this again; or\n"
+            "  - the TV is in standby (it drops off Wi-Fi): turn it on with the remote and try again.")
 
 
 def main():
