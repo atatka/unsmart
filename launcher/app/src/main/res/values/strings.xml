@@ -8,7 +8,6 @@
     <string name="state_off">No signal</string>
     <string name="no_inputs">No HDMI inputs found</string>
     <string name="soundbar">Soundbar</string>
-    <string name="tv_speakers">TV speakers</string>
     <string name="key_service_label">DumbTV remote buttons</string>
     <string name="key_service_description">Turns the remote\'s Netflix, YouTube and other app buttons into HDMI input shortcuts.</string>
     <string name="cannot_open">Could not open %1$s</string>

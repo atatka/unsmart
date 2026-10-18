@@ -10,6 +10,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.media.AudioDeviceCallback;
 import android.media.AudioDeviceInfo;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -93,6 +94,19 @@ public class MainActivity extends Activity {
         }
     };
 
+    /** Updates the Settings tile when the soundbar's eARC link comes or goes. */
+    private final AudioDeviceCallback audioChanges = new AudioDeviceCallback() {
+        @Override
+        public void onAudioDevicesAdded(AudioDeviceInfo[] added) {
+            scheduleRefresh();
+        }
+
+        @Override
+        public void onAudioDevicesRemoved(AudioDeviceInfo[] removed) {
+            scheduleRefresh();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +134,7 @@ public class MainActivity extends Activity {
         pendingWakeSwitch = false;
         TvInputManager tim = (TvInputManager) getSystemService(TV_INPUT_SERVICE);
         if (tim != null) tim.registerCallback(inputChanges, handler);
+        ((AudioManager) getSystemService(AUDIO_SERVICE)).registerAudioDeviceCallback(audioChanges, handler);
         populate();
     }
 
@@ -129,6 +144,7 @@ public class MainActivity extends Activity {
         handler.removeCallbacks(refresh);
         TvInputManager tim = (TvInputManager) getSystemService(TV_INPUT_SERVICE);
         if (tim != null) tim.unregisterCallback(inputChanges);
+        ((AudioManager) getSystemService(AUDIO_SERVICE)).unregisterAudioDeviceCallback(audioChanges);
         super.onPause();
     }
 
@@ -165,7 +181,7 @@ public class MainActivity extends Activity {
         handler.postDelayed(refresh, 400);
     }
 
-    /** "Soundbar · Atmos" (or "Soundbar · eARC") for the Settings tile, from the HDMI audio output. */
+    /** "Soundbar · Atmos" (or "Soundbar · eARC") for the Settings tile; empty while the soundbar is off. */
     private String soundSummary() {
         AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
         if (am == null) return getString(R.string.system);
@@ -181,7 +197,7 @@ public class MainActivity extends Activity {
             }
             return getString(R.string.soundbar) + "  ·  " + link;
         }
-        return getString(R.string.tv_speakers);
+        return "";
     }
 
     // ---- UI --------------------------------------------------------------------------------------
