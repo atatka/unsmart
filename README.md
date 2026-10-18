@@ -2,6 +2,8 @@
 
 **Unsmart your TV.**
 
+![DumbTV home screen with tiles for PlayStation 5, Apple TV and Settings](docs/img/picker.png)
+
 Turns the TCL Smart TV Pro (Google TV, Android 14) into a dumb monitor for HDMI boxes: no Google TV
 home, no ads, no apps, just your inputs. Its home screen is **DumbTV**, a small launcher in
 [`launcher/`](launcher/). Built on the ideas and tools of
