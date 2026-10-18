@@ -24,6 +24,9 @@ ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/t
 | HDMI 3 | Android TV box, to be replaced by an Apple TV (the tile picks up the name and logo by itself) |
 | HDMI 4 | Nintendo Switch 2 (named "Switch 2" in `config.xml` until it's connected) |
 
+Before the scripts can reach the TV, USB debugging has to be on: see
+**[Enable USB and wireless debugging](docs/enable-debugging.md)** (step-by-step with screenshots).
+
 ## Layout
 
 | Path | What it is |
@@ -35,6 +38,7 @@ ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/t
 | [`debloat/tcl-smart-tv-pro-g08.txt`](debloat/tcl-smart-tv-pro-g08.txt) | What is disabled and why. |
 | [`tools/disable.sh`](tools/disable.sh), [`tools/restore.sh`](tools/restore.sh) | Apply or undo a debloat list. |
 | [`tools/check.sh`](tools/check.sh) | Check the whole setup and repair what drifted (after firmware updates). |
+| [`docs/`](docs/) | Guides: [enable USB and wireless debugging](docs/enable-debugging.md). |
 | `backup/` | Package lists, `getprop` and all settings from before any change. |
 | `.ref/` | Upstream tv-vibehack clone, kept read-only as reference (its own git repo). |
 
