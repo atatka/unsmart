@@ -9,6 +9,8 @@ Set TV_HOST to the TV's IP. Usage:
     tv.py --pull <remote> <local>
 """
 import os
+import socket
+import subprocess
 import sys
 
 from adb_shell.adb_device import AdbDeviceTcp
@@ -36,9 +38,29 @@ def get_signer():
 
 
 def connect(timeout=120):
+    try:
+        socket.create_connection((HOST, PORT), timeout=5).close()  # fail fast instead of after `timeout`
+    except OSError as e:
+        sys.exit(unreachable_hint(e))
     dev = AdbDeviceTcp(HOST, PORT, default_transport_timeout_s=float(timeout))
-    dev.connect(rsa_keys=[get_signer()], transport_timeout_s=float(timeout), auth_timeout_s=timeout)
+    try:
+        dev.connect(rsa_keys=[get_signer()], transport_timeout_s=float(timeout), auth_timeout_s=timeout)
+    except OSError as e:
+        sys.exit(unreachable_hint(e))
     return dev
+
+
+def unreachable_hint(err):
+    """Tells a sleeping TV apart from macOS blocking this terminal's access to the local network."""
+    nc_ok = subprocess.run(["nc", "-z", "-G", "3", HOST, str(PORT)],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+    if nc_ok:
+        return (f"Can't connect to the TV at {HOST}:{PORT} ({err}), but the TV is reachable.\n"
+                "macOS Local Network privacy is blocking this terminal app. Allow it in System Settings >\n"
+                "Privacy & Security > Local Network (turn on your terminal app), then run this again.")
+    return (f"The TV at {HOST}:{PORT} isn't reachable ({err}).\n"
+            "Is it on? In standby this TV drops off Wi-Fi: turn it on with the remote and try again.\n"
+            "If it's on, check Settings > Developer options > USB debugging and its IP address.")
 
 
 def main():
