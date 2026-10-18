@@ -15,6 +15,9 @@ import android.media.AudioDeviceInfo;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.tv.TvInputManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +54,7 @@ public class MainActivity extends Activity {
     private static final int TEXT = 0xFFF2F2F7;
     private static final int TEXT_DIM = 0xFF8E8E93;
     private static final int GREEN = 0xFF30D158;
+    private static final int AMBER = 0xFFFF9F0A;
 
     private LinearLayout row;
     private Typeface outfit;
@@ -61,6 +65,26 @@ public class MainActivity extends Activity {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable refresh = this::populate;
+    private TextView onlineBar;
+    private final Runnable onlineCheck = this::checkOnline;
+
+    /** Re-checks internet access whenever the network changes while the picker is open. */
+    private final ConnectivityManager.NetworkCallback networkChanges = new ConnectivityManager.NetworkCallback() {
+        @Override
+        public void onAvailable(Network network) {
+            scheduleOnlineCheck();
+        }
+
+        @Override
+        public void onCapabilitiesChanged(Network network, NetworkCapabilities caps) {
+            scheduleOnlineCheck();
+        }
+
+        @Override
+        public void onLost(Network network) {
+            scheduleOnlineCheck();
+        }
+    };
 
     private final BroadcastReceiver screenOn = new BroadcastReceiver() {
         @Override
@@ -135,6 +159,10 @@ public class MainActivity extends Activity {
         TvInputManager tim = (TvInputManager) getSystemService(TV_INPUT_SERVICE);
         if (tim != null) tim.registerCallback(inputChanges, handler);
         ((AudioManager) getSystemService(AUDIO_SERVICE)).registerAudioDeviceCallback(audioChanges, handler);
+        if (getResources().getBoolean(R.bool.show_online_warning)) {
+            ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE)).registerDefaultNetworkCallback(networkChanges, handler);
+            scheduleOnlineCheck();
+        }
         populate();
     }
 
@@ -145,6 +173,10 @@ public class MainActivity extends Activity {
         TvInputManager tim = (TvInputManager) getSystemService(TV_INPUT_SERVICE);
         if (tim != null) tim.unregisterCallback(inputChanges);
         ((AudioManager) getSystemService(AUDIO_SERVICE)).unregisterAudioDeviceCallback(audioChanges);
+        if (getResources().getBoolean(R.bool.show_online_warning)) {
+            handler.removeCallbacks(onlineCheck);
+            ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE)).unregisterNetworkCallback(networkChanges);
+        }
         super.onPause();
     }
 
@@ -181,6 +213,19 @@ public class MainActivity extends Activity {
         handler.postDelayed(refresh, 400);
     }
 
+    private void scheduleOnlineCheck() {
+        handler.removeCallbacks(onlineCheck);
+        handler.postDelayed(onlineCheck, 1000);
+    }
+
+    /** Shows the info bar while the TV can reach the internet (it should be blocked in the router). */
+    private void checkOnline() {
+        new Thread(() -> {
+            boolean online = Online.check(this);
+            runOnUiThread(() -> onlineBar.setVisibility(online ? View.VISIBLE : View.GONE));
+        }, "online-check").start();
+    }
+
     /** "Soundbar · Atmos" (or "Soundbar · eARC") for the Settings tile; "Soundbar off" while it sleeps. */
     private String soundSummary() {
         AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -215,6 +260,26 @@ public class MainActivity extends Activity {
         root.setClipChildren(false);
         root.addView(row, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+
+        onlineBar = new TextView(this);
+        onlineBar.setText(R.string.online_warning);
+        style(onlineBar, 16, 400, TEXT);
+        onlineBar.setPadding(dp(18), dp(10), dp(22), dp(10));
+        GradientDrawable pill = new GradientDrawable();
+        pill.setColor(TILE);
+        pill.setCornerRadius(dp(22));
+        onlineBar.setBackground(pill);
+        GradientDrawable dot = new GradientDrawable();
+        dot.setShape(GradientDrawable.OVAL);
+        dot.setColor(AMBER);
+        dot.setSize(dp(10), dp(10));
+        onlineBar.setCompoundDrawablesRelativeWithIntrinsicBounds(dot, null, null, null);
+        onlineBar.setCompoundDrawablePadding(dp(12));
+        onlineBar.setVisibility(View.GONE);
+        FrameLayout.LayoutParams blp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        blp.bottomMargin = dp(48);
+        root.addView(onlineBar, blp);
         return root;
     }
 

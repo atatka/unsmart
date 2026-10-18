@@ -43,6 +43,12 @@
     -->
     <bool name="hide_empty_ports">true</bool>
 
+    <!--
+      Info bar at the bottom of the picker while the TV can reach the internet. A dumb TV should be blocked
+      in the router (e.g. FRITZ!Box parental controls); then the bar stays hidden.
+    -->
+    <bool name="show_online_warning">true</bool>
+
     <!-- After a cold boot or waking from standby, switch straight to the last used input. -->
     <bool name="resume_last_input">true</bool>
 

@@ -11,5 +11,6 @@
     <string name="soundbar_off">Soundbar off</string>
     <string name="key_service_label">DumbTV remote buttons</string>
     <string name="key_service_description">Turns the remote\'s Netflix, YouTube and other app buttons into HDMI input shortcuts.</string>
+    <string name="online_warning">This TV is online. Block its internet access in your router to keep it free of ads and updates.</string>
     <string name="cannot_open">Could not open %1$s</string>
 </resources>

@@ -9,6 +9,8 @@ ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/t
   to that HDMI port.
 - **Empty ports are hidden**: a port shows up only when something is plugged in (a CEC device or a
   picture), so HDMI 4 appears by itself once the Switch 2 is connected (`hide_empty_ports`).
+- **Online warning**: an info bar at the bottom of the picker appears only if the TV can reach the
+  internet. It's blocked in the router now, so the bar stays hidden (`show_online_warning`).
 - **Remote app buttons** are input shortcuts (see below), from anywhere, also while a box is playing.
 - **HDMI-CEC** still works: turning on the PS5 or the Android box switches the TV to it, and the sound
   system on eARC keeps working.
@@ -32,6 +34,7 @@ ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/t
 | [`launcher/`](launcher/) | DumbTV (`com.dumbtv.home`), plain Java, no dependencies: the picker (`MainActivity`), HDMI port logic (`Inputs`) and the remote-button service (`KeyService`). |
 | [`debloat/tcl-smart-tv-pro-g08.txt`](debloat/tcl-smart-tv-pro-g08.txt) | What is disabled and why. |
 | [`tools/disable.sh`](tools/disable.sh), [`tools/restore.sh`](tools/restore.sh) | Apply or undo a debloat list. |
+| [`tools/check.sh`](tools/check.sh) | Check the whole setup and repair what drifted (after firmware updates). |
 | `backup/` | Package lists, `getprop` and all settings from before any change. |
 | `.ref/` | Upstream tv-vibehack clone, kept read-only as reference (its own git repo). |
 
@@ -53,6 +56,17 @@ It builds the app, uploads it, installs it over the old one (keeping its setting
 re-enables the remote-button service. It doesn't interrupt what's on screen; press Home on the remote to
 see the new picker. Takes about 30 seconds. For a TV at another address:
 `TV_HOST=192.168.178.50 launcher/build-and-install.sh`.
+
+### Check the TV after a firmware update (or any time)
+
+```bash
+tools/check.sh
+```
+
+Checks firmware, the debloat list, DumbTV as Home, the remote-button service, the HDMI-CEC settings,
+eARC pass-through and that the internet is still blocked, and repairs what an update undid. Only the
+sound setting has to be fixed by hand in the TV menu (it says where). `tools/check.sh --dry-run` only
+reports. If DumbTV itself is gone, run `launcher/build-and-install.sh` first.
 
 Re-enable a single app, e.g. YouTube:
 
@@ -168,6 +182,8 @@ them that way, and don't press "Agree" on that screen.
 
 ## Going further
 
-The TV no longer needs the internet at all. In the FRITZ!Box (Internet → Filters → Parental Controls),
+Done: the TV is already cut off (HTTPS to the internet is blocked and the router answers its web
+requests, so Android sees a captive portal). `tools/check.sh` and DumbTV's info bar tell you if that
+changes. To set it up again: the TV no longer needs the internet at all. In the FRITZ!Box (Internet → Filters → Parental Controls),
 give `Smart-TV-Pro` a profile that blocks internet access: it stays reachable on the LAN for `./tv`,
 but can't phone home, show ads or pull firmware updates. Lift the block when you want an update.
