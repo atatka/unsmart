@@ -195,3 +195,9 @@ requests, so Android sees a captive portal). `tools/check.sh` and DumbTV's info 
 changes. To set it up again: the TV no longer needs the internet at all. In the FRITZ!Box (Internet → Filters → Parental Controls),
 give `Smart-TV-Pro` a profile that blocks internet access: it stays reachable on the LAN for `./tv`,
 but can't phone home, show ads or pull firmware updates. Lift the block when you want an update.
+
+## Licence
+
+MIT, see [`LICENSE`](LICENSE). The ADB tools come from [tv-vibehack](https://github.com/Gathin23/tv-vibehack)
+(MIT, by Gathin); the Outfit font, the Gradle wrapper and the logos have their own licences, all listed in
+`LICENSE`.

@@ -1,0 +1,65 @@
+MIT License
+
+Copyright (c) 2026 atatka
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Third-party parts
+
+tools/tv.py, tools/b64push.py and tools/requirements.txt, and the tools/disable.sh,
+tools/restore.sh and launcher/build-and-install.sh scripts adapted from it, come from
+tv-vibehack (https://github.com/Gathin23/tv-vibehack) and are used under its licence:
+
+  MIT License
+
+  Copyright (c) 2026 Gathin
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+The Outfit typeface in launcher/app/src/main/res/font/outfit.ttf is copyright
+The Outfit Project Authors and licensed under the SIL Open Font License 1.1,
+see launcher/FONT-LICENSE-OFL.txt.
+
+launcher/gradlew, launcher/gradlew.bat and launcher/gradle/wrapper/ are the Gradle
+wrapper, copyright the Gradle authors, licensed under the Apache License 2.0.
+
+The PlayStation, Apple TV, Android and Nintendo Switch logos in
+launcher/app/src/main/res/drawable/ are path data from Simple Icons (CC0 1.0); the
+brands are trademarks of their owners and are used only to label the TV's HDMI ports.
+The Android robot is reproduced or modified from work created and shared by Google and
+used according to terms described in the Creative Commons 3.0 Attribution License.
+The gear and HDMI icons are from Material Symbols by Google (Apache License 2.0).
