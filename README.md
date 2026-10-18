@@ -1,7 +1,11 @@
-# dumbtv
+# unsmart
 
-Turns the TCL Smart TV Pro (Google TV, Android 14) into a dumb monitor for HDMI boxes. Built on the
-ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/tv-vibehack)).
+**Unsmart your TV.**
+
+Turns the TCL Smart TV Pro (Google TV, Android 14) into a dumb monitor for HDMI boxes: no Google TV
+home, no ads, no apps, just your inputs. Its home screen is **DumbTV**, a small launcher in
+[`launcher/`](launcher/). Built on the ideas and tools in [`.ref/`](.ref/)
+([tv-vibehack](https://github.com/Gathin23/tv-vibehack)).
 
 - **Power on** → straight to the last used HDMI input. No Google TV home, no ads, no recommendations.
 - **Home** → a black screen with one tile per HDMI port (logo, name via HDMI-CEC, live on/standby state)
