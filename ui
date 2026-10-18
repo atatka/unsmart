@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Print the visible UI as text (works over HDMI video, where screenshots come out empty).
+# Text inside the focused element is marked with ">".
+cd "$(dirname "$0")"
+./tv 'uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; cat /sdcard/ui.xml; rm /sdcard/ui.xml' | python3 -c '
+import sys, xml.etree.ElementTree as ET
+root = ET.fromstring(sys.stdin.read())
+def walk(n, foc=False):
+    foc = foc or n.get("focused") == "true"
+    t, d = n.get("text", ""), n.get("content-desc", "")
+    if t or d:
+        print(">" if foc else " ", t, ("| " + d) if d and d != t else "")
+    for c in n: walk(c, foc)
+walk(root)
+'

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Grab a screenshot from the TV: ./shot [name]  -> shots/<name>.png
+cd "$(dirname "$0")"
+N="${1:-screen}"
+./tv "screencap -p /sdcard/s.png" >/dev/null && ./tv --pull /sdcard/s.png "shots/$N.png" >/dev/null && ./tv "rm /sdcard/s.png" >/dev/null
+sips -Z 960 "shots/$N.png" --out "shots/$N.small.png" >/dev/null 2>&1
+echo "shots/$N.small.png"

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  DumbTV configuration. Edit, then run launcher/build-and-install.sh.
+  Input labels are the TV's own port names ("HDMI 1" ... "HDMI 4"); see `./tv 'dumpsys tv_input'`.
+-->
+<resources>
+
+    <!-- Name a port yourself. Otherwise the tile shows the HDMI-CEC device name (e.g. "PlayStation 5"). -->
+    <string-array name="input_names">
+        <item>HDMI 1=Soundbar</item>
+        <item>HDMI 4=Switch 2</item>
+    </string-array>
+
+    <!--
+      Logo per port: playstation, apple, switch, android or anything else for a plain HDMI icon.
+      Without an entry the logo is picked from the tile's name ("PlayStation 5", "Apple TV", ...).
+    -->
+    <string-array name="input_icons">
+    </string-array>
+
+    <!-- Ports never shown as tiles. HDMI 1 is the eARC port with the sound system, not a picture source. -->
+    <string-array name="hidden_inputs">
+        <item>HDMI 1</item>
+    </string-array>
+
+    <!--
+      Remote buttons as shortcuts: key code = HDMI port, "picker" or "settings".
+      Key codes of this TCL remote: Netflix 4062, Prime Video 4099, YouTube 190, blue app button 4057,
+      TCL 4020, Disney+ 4141. Find others with: ./tv 'getevent -lt' or logcat "keyCode=".
+    -->
+    <string-array name="button_inputs">
+        <item>4062=HDMI 3</item>   <!-- Netflix: Apple TV -->
+        <item>4141=HDMI 3</item>   <!-- Disney+: Apple TV -->
+        <item>190=HDMI 2</item>    <!-- YouTube: PlayStation 5 -->
+        <item>4099=HDMI 4</item>   <!-- Prime Video: Switch 2 -->
+        <item>4057=picker</item>   <!-- blue app button: input picker -->
+        <item>4020=settings</item> <!-- TCL: TV settings -->
+    </string-array>
+
+    <!-- After a cold boot or waking from standby, switch straight to the last used input. -->
+    <bool name="resume_last_input">true</bool>
+
+    <!-- Clock and date top left. Off because the TV has no internet time here, so it shows a wrong time. -->
+    <bool name="show_clock">false</bool>
+
+    <!--
+      TCL keeps the active hardware input in these secure settings (values like 17 for .../HW17), so the
+      picker also follows switches made by HDMI-CEC (e.g. turning on the PS5). Leave empty on other brands.
+    -->
+    <string name="vendor_current_input_key" translatable="false">tcl_sys_tv_input_current_device_id</string>
+    <string name="vendor_last_input_key" translatable="false">tcl_sys_tv_input_last_device_id</string>
+</resources>

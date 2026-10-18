@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Shortcut: ./tv <shell cmd> | ./tv --batch < file | ./tv --probe. Defaults to the TCL TV's IP.
+cd "$(dirname "$0")"
+export TV_HOST="${TV_HOST:-192.168.178.36}"
+exec tools/venv/bin/python -I tools/tv.py "$@"

@@ -1,0 +1,47 @@
+# TCL Smart TV Pro (G08, tcl9618), Google TV / Android 14, firmware UTT2.250416.001 AU02
+# Used as a dumb monitor: Android TV box on HDMI 3, PS5 on HDMI 2, sound system on HDMI 1 (eARC).
+#
+# Apply:   tools/disable.sh debloat/tcl-smart-tv-pro-g08.txt
+# Undo:    tools/restore.sh debloat/tcl-smart-tv-pro-g08.txt
+# Everything is DISABLED for user 0, never uninstalled. Comment out any line you want to keep.
+#
+# Kept on purpose: HDMI/CEC/input stack (com.tcl.tvinput, com.tcl.tv, com.tcl.systemserver), TV settings,
+# Quick Panel behind the remote's settings key (com.tcl.suspension), Sound Effects (com.tcl.hearaid),
+# GameBar for the PS5, Dolby services, keyboards, Play Store and Play services.
+
+# Streaming apps: everything runs on the HDMI boxes
+com.netflix.ninja
+com.netflix.tokenmanager
+com.amazon.amazonvideo.livingroom
+com.google.android.youtube.tv
+
+# TCL content, ads, telemetry and store demo
+com.tcl.waterfall.overseas             # "TCL Channel", free ad-supported channels
+com.tcl.channelplus                    # TCL Channel's live TV input
+com.tcl.tv.tclhome_passive             # "TCL Home Passive", viewing data
+com.tcl.interactive                    # TCL_TIAS
+com.tcl.logkit                         # log collection and upload
+com.tcl.exhibit                        # T-Exhibition, shop demo
+com.tcl.esticker                       # Showmode, shop demo stickers
+com.tcl.partnercustomizer              # TCL rows inside the Google TV home
+
+# Google extras
+android.autoinstalls.config.google.gtvpai  # silently installs promoted apps
+com.google.android.feedback
+com.android.tv.feedbackconsent
+com.google.android.apps.tv.dreamx      # Google TV ambient screensaver (photos, recommendations)
+
+# Casting and mirroring to the TV itself (the boxes do this)
+com.mediatek.AirplayAPK
+com.mediatek.airplaydaemon
+com.tcl.airplay2
+com.google.android.tv.remote.service   # Google TV phone remote; re-enable to use the Google Home app as remote
+com.tcl.magiconnectfree
+com.tcl.miracast
+
+# USB media player
+com.tcl.ui_mediaCenter
+
+# Stock Google TV home, replaced by launcher/. Must stay last: DumbTV has to be installed first.
+com.google.android.apps.tv.launcherx
+com.google.android.tungsten.setupwraith  # its RecoveryActivity would otherwise take over the Home key

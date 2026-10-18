@@ -1,0 +1,28 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.dumbtv.home'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.dumbtv.home'
+        minSdk 28
+        // 29 keeps the vendor input settings (tcl_sys_tv_input_*) readable on Android 14.
+        targetSdk 29
+        versionCode 1
+        versionName '1.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
