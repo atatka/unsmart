@@ -181,7 +181,7 @@ public class MainActivity extends Activity {
         handler.postDelayed(refresh, 400);
     }
 
-    /** "Soundbar · Atmos" (or "Soundbar · eARC") for the Settings tile; empty while the soundbar is off. */
+    /** "Soundbar · Atmos" (or "Soundbar · eARC") for the Settings tile; "Soundbar off" while it sleeps. */
     private String soundSummary() {
         AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
         if (am == null) return getString(R.string.system);
@@ -197,7 +197,7 @@ public class MainActivity extends Activity {
             }
             return getString(R.string.soundbar) + "  ·  " + link;
         }
-        return "";
+        return getString(R.string.soundbar_off);
     }
 
     // ---- UI --------------------------------------------------------------------------------------
