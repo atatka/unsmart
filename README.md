@@ -109,6 +109,10 @@ trademarks of their owners, used here only to label the ports on this TV.
 - **macOS Local Network privacy** blocks the Xcode Python (`/usr/bin/python3`) with "No route to host"
   even though `nc` reaches port 5555. The venv uses mise's Python 3.12, which is allowed:
   `~/.local/share/mise/installs/python/3.12.14/bin/python3 -m venv tools/venv && tools/venv/bin/pip install -r tools/requirements.txt`.
+- **Claude app's Terminal panel (and `!` commands) can't reach the TV.** They run under "Claude Helper",
+  which macOS Local Network privacy blocks (even Apple's `nc` fails there), while Claude Code's own
+  commands are allowed. Run the scripts from the macOS Terminal app instead (click Allow when macOS asks
+  about the local network), or ask Claude to run them.
 - **Use port 5555, not the "wireless debugging" port.** With USB debugging on, this TCL also listens
   on classic ADB 5555 (`service.adb.tcp.port`), which survives reboots. The wireless-debugging port
   (e.g. 32819) needs TLS pairing and switches itself off when the network drops.
