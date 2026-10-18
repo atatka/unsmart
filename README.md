@@ -4,8 +4,8 @@
 
 Turns the TCL Smart TV Pro (Google TV, Android 14) into a dumb monitor for HDMI boxes: no Google TV
 home, no ads, no apps, just your inputs. Its home screen is **DumbTV**, a small launcher in
-[`launcher/`](launcher/). Built on the ideas and tools in [`.ref/`](.ref/)
-([tv-vibehack](https://github.com/Gathin23/tv-vibehack)).
+[`launcher/`](launcher/). Built on the ideas and tools of
+[tv-vibehack](https://github.com/Gathin23/tv-vibehack).
 
 - **Power on** → straight to the last used HDMI input. No Google TV home, no ads, no recommendations.
 - **Home** → a black screen with one tile per HDMI port (logo, name via HDMI-CEC, live on/standby state)
@@ -44,7 +44,7 @@ Before the scripts can reach the TV, USB debugging has to be on: see
 | [`tools/check.sh`](tools/check.sh) | Check the whole setup and repair what drifted (after firmware updates). |
 | [`docs/`](docs/) | Guides: [enable USB and wireless debugging](docs/enable-debugging.md). |
 | `backup/` | Package lists, `getprop` and all settings from before any change. |
-| `.ref/` | Upstream tv-vibehack clone, kept read-only as reference (its own git repo). |
+| `.ref/` | Local only (ignored): a clone of [tv-vibehack](https://github.com/Gathin23/tv-vibehack) for reference. |
 
 ## Common tasks
 
