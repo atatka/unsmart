@@ -47,6 +47,7 @@ final class Inputs {
         Map<String, String> icons = configMap(ctx, R.array.input_icons);
         Set<String> hidden = new HashSet<>();
         for (String h : ctx.getResources().getStringArray(R.array.hidden_inputs)) hidden.add(h.trim());
+        boolean hideEmpty = ctx.getResources().getBoolean(R.bool.hide_empty_ports);
 
         List<TvInputInfo> all = tim.getTvInputList();
         Map<String, String> cecNames = new HashMap<>();
@@ -69,6 +70,9 @@ final class Inputs {
             else if (!TextUtils.isEmpty(custom)) in.name = custom.toString();
             else in.name = in.port;
             in.state = tim.getInputState(in.id);
+            // An empty port reports the same "standby" state as a sleeping box, so tell them apart by HDMI-CEC:
+            // anything plugged in shows up as a CEC device, or at least sends a picture.
+            if (hideEmpty && !cecNames.containsKey(in.id) && in.state != TvInputManager.INPUT_STATE_CONNECTED) continue;
             in.icon = icon(icons.containsKey(in.port) ? icons.get(in.port) : in.name);
             out.add(in);
         }

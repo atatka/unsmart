@@ -7,6 +7,8 @@ ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/t
 - **Home** → a black screen with one tile per HDMI port (logo, name via HDMI-CEC, live on/standby state)
   and a Settings tile showing the soundbar link. **Back** returns to the input you were on, **1–4** jump
   to that HDMI port.
+- **Empty ports are hidden**: a port shows up only when something is plugged in (a CEC device or a
+  picture), so HDMI 4 appears by itself once the Switch 2 is connected (`hide_empty_ports`).
 - **Remote app buttons** are input shortcuts (see below), from anywhere, also while a box is playing.
 - **HDMI-CEC** still works: turning on the PS5 or the Android box switches the TV to it, and the sound
   system on eARC keeps working.
@@ -64,7 +66,7 @@ then `sdkmanager "platforms;android-34" "build-tools;34.0.0"`).
 |---|---|
 | Netflix, Disney+ | HDMI 3 (Android box, later Apple TV) |
 | YouTube | HDMI 2 (PS5) |
-| Prime Video | HDMI 4 (Switch 2) |
+| Prime Video | HDMI 4 (Switch 2; does nothing while the port is empty) |
 | Blue app button | the DumbTV picker |
 | TCL | TV Settings |
 | 1–4 (in the picker) | HDMI 1–4 |

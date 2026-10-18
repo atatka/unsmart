@@ -37,6 +37,12 @@
         <item>4020=settings</item> <!-- TCL: TV settings -->
     </string-array>
 
+    <!--
+      Hide ports with nothing plugged in: no HDMI-CEC device and no picture. A box without CEC still shows up
+      while it is on. The tile appears by itself as soon as something is connected.
+    -->
+    <bool name="hide_empty_ports">true</bool>
+
     <!-- After a cold boot or waking from standby, switch straight to the last used input. -->
     <bool name="resume_last_input">true</bool>
 
