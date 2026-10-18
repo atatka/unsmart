@@ -37,12 +37,22 @@ ideas and tools in [`.ref/`](.ref/) ([tv-vibehack](https://github.com/Gathin23/t
 
 ## Common tasks
 
-Name the Apple TV once it's plugged in (otherwise the tile shows its HDMI-CEC name), or hide a port:
-edit [`launcher/app/src/main/res/values/config.xml`](launcher/app/src/main/res/values/config.xml), then
+### Push a new version of DumbTV after changing `config.xml`
+
+1. Edit [`launcher/app/src/main/res/values/config.xml`](launcher/app/src/main/res/values/config.xml):
+   tile names (`input_names`), logos (`input_icons`), hidden ports (`hidden_inputs`), remote buttons
+   (`button_inputs`), `hide_empty_ports`, `resume_last_input`, `show_clock`.
+2. Make sure the TV is on (standby is fine as long as it's on the network).
+3. From the project folder run:
 
 ```bash
 launcher/build-and-install.sh
 ```
+
+It builds the app, uploads it, installs it over the old one (keeping its settings), sets it as Home and
+re-enables the remote-button service. It doesn't interrupt what's on screen; press Home on the remote to
+see the new picker. Takes about 30 seconds. For a TV at another address:
+`TV_HOST=192.168.178.50 launcher/build-and-install.sh`.
 
 Re-enable a single app, e.g. YouTube:
 
